@@ -4,26 +4,27 @@ import {DisplayCounter} from './Counter/DisplayCounter/DisplayCounter';
 import {UniversalButton} from './UniversalButton/UniversalButton';
 
 function App() {
-    let [counter, setCounter] = useState(0);
+    const RESET_VALUE = 0
+    const MAX_VALUE = 5
+    const [counter, setCounter] = useState(RESET_VALUE);
+
+    const increment = () => setCounter(counter + 1)
+    const reset = () => setCounter(RESET_VALUE)
 
 
-    const increment = () => setCounter(++counter)
-    const zero = () => setCounter(0)
-
-    const disabledIncButtonOrNot = counter === 5
-    const disabledResetButtonOrNot = counter === 0
+    const disabledIncButton = counter === MAX_VALUE;
+    const disabledResetButton = counter === RESET_VALUE;
 
     return (
-        <div >
-            <DisplayCounter counter={counter}/>
+        <div>
+            <DisplayCounter counter={counter} MAX_VALUE={MAX_VALUE}/>
             <div className={'block'}>
                 <UniversalButton name={'inc'}
-                                onClick={increment}
-                                disabled={disabledIncButtonOrNot}/>
+                                 onClick={increment}
+                                 disabled={disabledIncButton}/>
                 <UniversalButton name={'reset'}
-                                 onClick={zero}
-                                 disabled={disabledResetButtonOrNot}
-                />
+                                 onClick={reset}
+                                 disabled={disabledResetButton}/>
             </div>
 
         </div>

@@ -1,16 +1,17 @@
 import React from 'react';
-import s from './DisplayCounter.module.css'
+import classes from './DisplayCounter.module.css'
 
 type DisplayCounter = {
     counter: number
+    MAX_VALUE: number
 }
 
 export const DisplayCounter = (props: DisplayCounter) => {
-    const {counter} = props;
-    const color = counter === 5 ? s.red : s.def;
+    const {counter,MAX_VALUE} = props;
+    const color = counter === MAX_VALUE ? classes.red : classes.def;
 
     return (
-        <div className={s.block}>
+        <div className={classes.block}>
             <span className={color}>{counter}</span>
         </div>
     );
