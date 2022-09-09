@@ -1,5 +1,4 @@
 .block {
-    margin-top: 5px;
     background-color: deepskyblue;
     display: flex;
     border: 1px solid black;
@@ -9,6 +8,3 @@
     align-items: center;
 }
 
-.main-content {
-    border: 1px solid black;
-}

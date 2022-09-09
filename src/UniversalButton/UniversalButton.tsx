@@ -8,7 +8,7 @@ type UniversalButton = {
 }
 
 
-const UniversalButton = (props: UniversalButton) => {
+export const UniversalButton = (props: UniversalButton) => {
     const {name, onClick, disabled} = props
 
     const onClickChangeHandler = ()=>{
@@ -23,4 +23,3 @@ const UniversalButton = (props: UniversalButton) => {
     );
 };
 
-export default UniversalButton;
