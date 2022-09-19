@@ -9,6 +9,9 @@ function App() {
     const MAX_VALUE = 5;
     const [counter, setCounter] = useState<number>(RESET_VALUE);
 
+    const [maxValueSecondDisplay, setMaxValueSecondDisplay] = useState('0')
+    const [startValueSecondDisplay, setStartValueSecondDisplay] = useState('0')
+
     const increment = () => setCounter(counter + 1)
     const reset = () => setCounter(RESET_VALUE)
 
@@ -33,10 +36,14 @@ function App() {
                 <div className={'inputWrapper'}>
                     <DisplaySecondCounter text={'max value'}
                                           type={'number'}
-                                          value={counter}/>
+                                          valueSecondDisplay={maxValueSecondDisplay}
+                                          setValue={setMaxValueSecondDisplay}
+                                          />
                     <DisplaySecondCounter text={'start value'}
                                           type={'number'}
-                                          value={counter}
+                                          valueSecondDisplay={startValueSecondDisplay}
+                                          setValue={setStartValueSecondDisplay}
+
                     />
                 </div>
 
