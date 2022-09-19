@@ -7,11 +7,11 @@ type UniversalButton = {
     disabled: boolean
 }
 
-export const UniversalButton : React.FC<UniversalButton> = (props) => {
+export const UniversalButton: React.FC<UniversalButton> = (props) => {
     const {name, onClick, disabled} = props
 
     return (
-        <div >
+        <div>
             <button disabled={disabled}
                     className={classes.button}
                     onClick={onClick}>{name}</button>

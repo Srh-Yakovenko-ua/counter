@@ -1,7 +1,7 @@
 .displayCounter {
     display: flex;
     border: 1px solid #5490cb;
-    border-radius: 10px ;
+    border-radius: 10px;
     width: 250px;
     height: 100px;
     justify-content: center;
@@ -15,7 +15,7 @@
     font-size: 24px;
 }
 
-.def{
+.def {
     color: black;
     font-size: 24px;
 }

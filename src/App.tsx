@@ -40,6 +40,7 @@ function App() {
     const increment = () => setCounter(counter + 1)
     const reset = () => setCounter(RESET_VALUE)
 
+
     const disabledSetButton = (maxValueInputDisplay === startValueInputDisplay) || (maxValueInputDisplay < 0 || startValueInputDisplay < 0);
     const disabledIncButton = (counter === MAX_VALUE) || disabledSetButton || (maxValueInputDisplay > 0 || startValueInputDisplay > 0);
     const disabledResetButton = (counter === RESET_VALUE) || disabledSetButton || maxValueInputDisplay > 0 || startValueInputDisplay > 0;
