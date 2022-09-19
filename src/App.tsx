@@ -14,6 +14,13 @@ function App() {
     const [incorrectValue, setIncorrectValue] = useState<string>('')
     const [correctValue, setCorrectValue] = useState<string>('')
 
+    useEffect(() => {
+        setIncorrectValue('')
+        if (maxValueInputDisplay > 0 || startValueInputDisplay > 0) {
+            setCorrectValue(`Enter values and press 'Set' `)
+        }
+    }, [maxValueInputDisplay, startValueInputDisplay])
+
 
     useEffect(() => {
         setIncorrectValue('')
@@ -43,6 +50,7 @@ function App() {
                 <DisplayCounter counter={counter}
                                 MAX_VALUE={MAX_VALUE}
                                 incorrectValue={incorrectValue}
+                                correctValue={correctValue}
 
                 />
                 <div className={'buttonWrapper'}>
