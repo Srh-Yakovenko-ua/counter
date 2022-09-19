@@ -1,0 +1,22 @@
+.displaySecond {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.displaySecond:last-child {
+    margin-bottom: 0;
+}
+.displaySecond span {
+    color: #5490cb;
+    font-size: 20px;
+}
+
+
+.displaySecond input {
+    margin-left: 25px;
+    height: 30px;
+    width: 150px;
+    border: 2px solid #5490cb;
+    border-radius: 7px;
+}
