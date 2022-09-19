@@ -1,19 +1,38 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {DisplayCounter} from './Counter/DisplayCounter/DisplayCounter';
 import {UniversalButton} from './UniversalButton/UniversalButton';
-import {DisplaySecondCounter} from './Counter/DisplayForTheSecondCounter/DisplaySecondCounter';
+import {DisplayInputSettingCounter} from './Counter/DisplayForTheSecondCounter/DisplayInputSettingCounter';
 
 function App() {
     const RESET_VALUE = 0;
     const MAX_VALUE = 5;
     const [counter, setCounter] = useState<number>(RESET_VALUE);
 
-    const [maxValueSecondDisplay, setMaxValueSecondDisplay] = useState('0')
-    const [startValueSecondDisplay, setStartValueSecondDisplay] = useState('0')
+    const [maxValueInputDisplay, setMaxValueInputDisplay] = useState<number>(0)
+    const [startValueInputDisplay, setStartValueInputDisplay] = useState<number>(0)
+    const [incorrectValue, setIncorrectValue] = useState<string>('')
+    const [correctValue, setCorrectValue] = useState<string>('')
+
+
+    useEffect(() => {
+        setIncorrectValue('')
+        if (maxValueInputDisplay < 0 || startValueInputDisplay < 0) {
+            setIncorrectValue('Incorrect value')
+        }
+        if (maxValueInputDisplay === startValueInputDisplay) {
+            setIncorrectValue('Incorrect value')
+        }
+        if (startValueInputDisplay > maxValueInputDisplay) {
+            setIncorrectValue('Incorrect value')
+        }
+    }, [maxValueInputDisplay, startValueInputDisplay])
+
+    const errorBothInput = maxValueInputDisplay === startValueInputDisplay ? 'errorBothInput' : ''
 
     const increment = () => setCounter(counter + 1)
     const reset = () => setCounter(RESET_VALUE)
+
 
     const disabledIncButton = (counter === MAX_VALUE);
     const disabledResetButton = (counter === RESET_VALUE);
@@ -21,7 +40,11 @@ function App() {
     return (
         <>
             <div className={'mainWrapper'}>
-                <DisplayCounter counter={counter} MAX_VALUE={MAX_VALUE}/>
+                <DisplayCounter counter={counter}
+                                MAX_VALUE={MAX_VALUE}
+                                incorrectValue={incorrectValue}
+
+                />
                 <div className={'buttonWrapper'}>
                     <UniversalButton name={'inc'}
                                      onClick={increment}
@@ -34,15 +57,22 @@ function App() {
 
             <div className={'secondWrapper'}>
                 <div className={'inputWrapper'}>
-                    <DisplaySecondCounter text={'max value'}
-                                          type={'number'}
-                                          valueSecondDisplay={maxValueSecondDisplay}
-                                          setValue={setMaxValueSecondDisplay}
-                                          />
-                    <DisplaySecondCounter text={'start value'}
-                                          type={'number'}
-                                          valueSecondDisplay={startValueSecondDisplay}
-                                          setValue={setStartValueSecondDisplay}
+                    <DisplayInputSettingCounter text={'max value'}
+                                                type={'number'}
+                                                valueInputSettingDisplay={maxValueInputDisplay}
+                                                setValue={setMaxValueInputDisplay}
+                                                setIncorrectValue={setIncorrectValue}
+                                                errorBothInput={errorBothInput}
+
+
+                    />
+                    <DisplayInputSettingCounter text={'start value'}
+                                                type={'number'}
+                                                valueInputSettingDisplay={startValueInputDisplay}
+                                                setValue={setStartValueInputDisplay}
+                                                setIncorrectValue={setIncorrectValue}
+                                                errorBothInput={errorBothInput}
+
 
                     />
                 </div>
