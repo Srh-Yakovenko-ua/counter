@@ -5,20 +5,19 @@ type DisplayCounter = {
     counter: number
     MAX_VALUE: number
     incorrectValue: string
-
+    correctValue: string
 }
 
 export const DisplayCounter: React.FC<DisplayCounter> = (props) => {
-    const {counter, MAX_VALUE, incorrectValue} = props;
+    const {counter, MAX_VALUE, incorrectValue, correctValue} = props;
     const colorCounter = counter === MAX_VALUE ? classes.red : classes.def;
 
 
     return (
         <div className={classes.displayCounter}>
-            {/*{incorrectValue ? incorrectValue :  suc ? suc : <span></span> }*/}
-            {incorrectValue ?
-                <span className={classes.red}>{incorrectValue}</span> :
-                <span className={colorCounter}>{counter}</span>}
+            {incorrectValue ? <span className={classes.red}>{incorrectValue}</span> :
+                correctValue ? <span>{correctValue}</span> : <span className={colorCounter}>{counter}</span>}
+
         </div>
     );
 };
