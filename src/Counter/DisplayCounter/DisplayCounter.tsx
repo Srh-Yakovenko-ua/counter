@@ -6,13 +6,13 @@ type DisplayCounter = {
     MAX_VALUE: number
 }
 
-export const DisplayCounter = (props: DisplayCounter) => {
+export const DisplayCounter : React.FC<DisplayCounter> = (props) => {
     const {counter,MAX_VALUE} = props;
-    const color = counter === MAX_VALUE ? classes.red : classes.def;
+    const colorCounter = counter === MAX_VALUE ? classes.red : classes.def;
 
     return (
-        <div className={classes.block}>
-            <span className={color}>{counter}</span>
+        <div className={classes.displayCounter} >
+            <span className={colorCounter} >{counter}</span>
         </div>
     );
 };

@@ -4,21 +4,20 @@ import {DisplayCounter} from './Counter/DisplayCounter/DisplayCounter';
 import {UniversalButton} from './UniversalButton/UniversalButton';
 
 function App() {
-    const RESET_VALUE = 0
-    const MAX_VALUE = 5
-    const [counter, setCounter] = useState(RESET_VALUE);
+    const RESET_VALUE = 0;
+    const MAX_VALUE = 5;
+    const [counter, setCounter] = useState<number>(RESET_VALUE);
 
     const increment = () => setCounter(counter + 1)
     const reset = () => setCounter(RESET_VALUE)
 
-
-    const disabledIncButton = counter === MAX_VALUE;
-    const disabledResetButton = counter === RESET_VALUE;
+    const disabledIncButton = (counter === MAX_VALUE);
+    const disabledResetButton = (counter === RESET_VALUE);
 
     return (
-        <div>
+        <div className={'mainWrapper'}>
             <DisplayCounter counter={counter} MAX_VALUE={MAX_VALUE}/>
-            <div className={'block'}>
+            <div className={'buttonWrapper'}>
                 <UniversalButton name={'inc'}
                                  onClick={increment}
                                  disabled={disabledIncButton}/>
@@ -26,6 +25,7 @@ function App() {
                                  onClick={reset}
                                  disabled={disabledResetButton}/>
             </div>
+
 
         </div>
     );

@@ -1,24 +1,20 @@
 import React from 'react';
-import s from './UniversalButton.module.css'
+import classes from './UniversalButton.module.css'
 
 type UniversalButton = {
     name: string
     onClick: () => void
-    disabled : boolean
+    disabled: boolean
 }
 
-
-export const UniversalButton = (props: UniversalButton) => {
+export const UniversalButton : React.FC<UniversalButton> = (props) => {
     const {name, onClick, disabled} = props
 
-    const onClickChangeHandler = ()=>{
-        onClick()
-    }
-
-
     return (
-        <div className={s.block}>
-            <button disabled={props.disabled} className={s.button}  onClick={onClickChangeHandler}>{name}</button>
+        <div >
+            <button disabled={disabled}
+                    className={classes.button}
+                    onClick={onClick}>{name}</button>
         </div>
     );
 };
