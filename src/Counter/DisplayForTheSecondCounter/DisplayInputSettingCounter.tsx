@@ -20,7 +20,8 @@ export const DisplayInputSettingCounter: React.FC<DisplaySecondCounterType> = (p
 
 
     const onChangeSetHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(+e.currentTarget.value)
+        const rondCount = Math.round(+e.currentTarget.value)
+        setValue(rondCount)
     }
     const errorOneOfInput = valueInputSettingDisplay < 0 ? classes.errorInput : classes.displaySecond
 
