@@ -4,18 +4,21 @@ import {DisplayCounter} from './Counter/DisplayCounter/DisplayCounter';
 import {UniversalButton} from './UniversalButton/UniversalButton';
 import {DisplayInputSettingCounter} from './Counter/DisplayForTheSecondCounter/DisplayInputSettingCounter';
 
-function App() {
-    const RESET_VALUE = 0;
-    const MAX_VALUE = 5;
-    const [counter, setCounter] = useState<number>(RESET_VALUE);
 
+function App() {
     const [maxValueInputDisplay, setMaxValueInputDisplay] = useState<number>(0)
     const [startValueInputDisplay, setStartValueInputDisplay] = useState<number>(0)
+
+    const RESET_VALUE = 0;
+    const START_VALUE = startValueInputDisplay
+    const MAX_VALUE = maxValueInputDisplay;
+    const [counter, setCounter] = useState<number>(START_VALUE);
+
+
     const [incorrectValue, setIncorrectValue] = useState<string>('')
     const [correctValue, setCorrectValue] = useState<string>('')
 
     useEffect(() => {
-        setIncorrectValue('')
         if (maxValueInputDisplay > 0 || startValueInputDisplay > 0) {
             setCorrectValue(`Enter values and press 'Set' `)
         }
@@ -24,26 +27,47 @@ function App() {
 
     useEffect(() => {
         setIncorrectValue('')
-        if (maxValueInputDisplay < 0 || startValueInputDisplay < 0) {
-            setIncorrectValue('Incorrect value')
-        }
-        if (maxValueInputDisplay === startValueInputDisplay) {
-            setIncorrectValue('Incorrect value')
-        }
-        if (startValueInputDisplay > maxValueInputDisplay) {
+        if (maxValueInputDisplay < 0
+            || startValueInputDisplay < 0
+            || maxValueInputDisplay === startValueInputDisplay
+            || startValueInputDisplay > maxValueInputDisplay) {
             setIncorrectValue('Incorrect value')
         }
     }, [maxValueInputDisplay, startValueInputDisplay])
 
-    const errorBothInput = maxValueInputDisplay === startValueInputDisplay ? 'errorBothInput' : ''
+    const errorBothInput = maxValueInputDisplay === startValueInputDisplay || startValueInputDisplay > maxValueInputDisplay ? 'errorBothInput' : ''
+
+    useEffect(() => {
+        const max_value = localStorage.getItem('maxValueInputDisplay')
+        if (max_value) {
+            setMaxValueInputDisplay(JSON.parse(max_value))
+        }
+        const start_value = localStorage.getItem('startValueInputDisplay')
+        if (start_value) {
+            setStartValueInputDisplay(JSON.parse(start_value))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('maxValueInputDisplay', JSON.stringify(maxValueInputDisplay))
+        localStorage.setItem('startValueInputDisplay', JSON.stringify(startValueInputDisplay))
+    }, [maxValueInputDisplay, startValueInputDisplay])
+
 
     const increment = () => setCounter(counter + 1)
     const reset = () => setCounter(RESET_VALUE)
 
+    const setInput = () => {
+       // setStartValueInputDisplay(Math.round(startValueInputDisplay))
+        //setMaxValueInputDisplay(Math.round(maxValueInputDisplay))
+        setCounter(startValueInputDisplay)
+        setCorrectValue('')
+    }
 
-    const disabledSetButton = (maxValueInputDisplay === startValueInputDisplay) || (maxValueInputDisplay < 0 || startValueInputDisplay < 0);
-    const disabledIncButton = (counter === MAX_VALUE) || disabledSetButton || (maxValueInputDisplay > 0 || startValueInputDisplay > 0);
-    const disabledResetButton = (counter === RESET_VALUE) || disabledSetButton || maxValueInputDisplay > 0 || startValueInputDisplay > 0;
+
+    const disabledSetButton = incorrectValue !== '' || !correctValue
+    const disabledIncButton = (counter === MAX_VALUE) || incorrectValue !== '' || correctValue !== ''
+    const disabledResetButton = (counter === RESET_VALUE)
 
 
     return (
@@ -74,7 +98,6 @@ function App() {
                                                 setIncorrectValue={setIncorrectValue}
                                                 errorBothInput={errorBothInput}
 
-
                     />
                     <DisplayInputSettingCounter text={'start value'}
                                                 type={'number'}
@@ -83,14 +106,12 @@ function App() {
                                                 setIncorrectValue={setIncorrectValue}
                                                 errorBothInput={errorBothInput}
 
-
                     />
                 </div>
 
                 <div className={'buttonWrapperSet'}>
                     <UniversalButton name={'Set'}
-                                     onClick={() => {
-                                     }}
+                                     onClick={setInput}
                                      disabled={disabledSetButton}/>
                 </div>
 
