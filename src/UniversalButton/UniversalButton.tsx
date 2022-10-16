@@ -8,13 +8,15 @@ type UniversalButton = {
 }
 
 export const UniversalButton: React.FC<UniversalButton> = (props) => {
-    const {name, onClick, disabled} = props
+    const {name, onClick, disabled, ...rest} = props
 
     return (
         <div>
             <button disabled={disabled}
                     className={classes.button}
-                    onClick={onClick}>{name}</button>
+                    onClick={onClick}
+                    {...rest}
+            >{name}</button>
         </div>
     );
 };

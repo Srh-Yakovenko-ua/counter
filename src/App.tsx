@@ -10,9 +10,7 @@ function App() {
     const [startValueInputDisplay, setStartValueInputDisplay] = useState<number>(0)
 
     const RESET_VALUE = 0;
-    const START_VALUE = startValueInputDisplay
-    const MAX_VALUE = maxValueInputDisplay;
-    const [counter, setCounter] = useState<number>(START_VALUE);
+    const [counter, setCounter] = useState<number>(startValueInputDisplay);
 
 
     const [incorrectValue, setIncorrectValue] = useState<string>('')
@@ -58,15 +56,13 @@ function App() {
     const reset = () => setCounter(RESET_VALUE)
 
     const setInput = () => {
-       // setStartValueInputDisplay(Math.round(startValueInputDisplay))
-        //setMaxValueInputDisplay(Math.round(maxValueInputDisplay))
         setCounter(startValueInputDisplay)
         setCorrectValue('')
     }
 
 
     const disabledSetButton = incorrectValue !== '' || !correctValue
-    const disabledIncButton = (counter === MAX_VALUE) || incorrectValue !== '' || correctValue !== ''
+    const disabledIncButton = (counter === maxValueInputDisplay) || incorrectValue !== '' || correctValue !== ''
     const disabledResetButton = (counter === RESET_VALUE)
 
 
@@ -74,7 +70,7 @@ function App() {
         <>
             <div className={'mainWrapper'}>
                 <DisplayCounter counter={counter}
-                                MAX_VALUE={MAX_VALUE}
+                                MAX_VALUE={maxValueInputDisplay}
                                 incorrectValue={incorrectValue}
                                 correctValue={correctValue}
 
