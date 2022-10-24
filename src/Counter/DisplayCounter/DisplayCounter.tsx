@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './DisplayCounter.module.css'
 
 type DisplayCounter = {
-    counter: number
+    counterDisplay: number
     MAX_VALUE: number
     incorrectValue: string
     correctValue: string
@@ -10,20 +10,20 @@ type DisplayCounter = {
 
 export const DisplayCounter: React.FC<DisplayCounter> = (props) => {
     const {
-        counter,
+        counterDisplay,
         MAX_VALUE,
         incorrectValue,
         correctValue
     } = props;
 
-    const colorCounter = counter === MAX_VALUE ? classes.red : classes.def;
+    const colorCounter = counterDisplay === MAX_VALUE ? classes.red : classes.def;
 
 
     return (
         <div className={classes.displayCounter}>
             {incorrectValue ? <span className={classes.red}>{incorrectValue}</span> :
                 correctValue ? <span className={classes.correctValue}>{correctValue}</span> :
-                    <span className={colorCounter}>{counter}</span>}
+                    <span className={colorCounter}>{counterDisplay}</span>}
 
         </div>
     );
