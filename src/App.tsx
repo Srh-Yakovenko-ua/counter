@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {DisplayCounter} from './Counter/DisplayCounter/DisplayCounter';
 import {UniversalButton} from './UniversalButton/UniversalButton';
@@ -20,56 +20,68 @@ function App() {
     const counterState = useSelector<RootStateType, initialStateType>(state => state.counter);
     const dispatch = useDispatch();
 
+    const {
+        maxValueInputDisplay,
+        startValueInputDisplay,
+        valueCounter,
+        counterText: {incorrectValue, correctValue}
+    } = counterState;
+
+
     useEffect(() => {
-        if (counterState.maxValueInputDisplay > 0 || counterState.startValueInputDisplay > 0) {
+        if (maxValueInputDisplay > 0 || startValueInputDisplay > 0) {
             dispatch(correctValueAC((`Enter values and press 'Set' `)))
         }
-    }, [counterState.maxValueInputDisplay, counterState.startValueInputDisplay])
-
+    }, [maxValueInputDisplay, startValueInputDisplay])
 
     useEffect(() => {
         dispatch(incorrectValueAC(''))
-        if (counterState.maxValueInputDisplay < 0
-            || counterState.startValueInputDisplay < 0
-            || counterState.maxValueInputDisplay === counterState.startValueInputDisplay
-            || counterState.startValueInputDisplay > counterState.maxValueInputDisplay) {
+        if (maxValueInputDisplay < 0
+            || startValueInputDisplay < 0
+            || maxValueInputDisplay === startValueInputDisplay
+            || startValueInputDisplay > maxValueInputDisplay) {
             dispatch(incorrectValueAC('Incorrect value'))
         }
-    }, [counterState.maxValueInputDisplay, counterState.startValueInputDisplay])
+    }, [maxValueInputDisplay, startValueInputDisplay])
 
-    const errorBothInput = counterState.maxValueInputDisplay === counterState.startValueInputDisplay || counterState.startValueInputDisplay > counterState.maxValueInputDisplay ? 'errorBothInput' : ''
+    const errorBothInput = maxValueInputDisplay === startValueInputDisplay || startValueInputDisplay > maxValueInputDisplay ? 'errorBothInput' : ''
 
 
-    const increment = () => {
-        dispatch(incrementAC(counterState.valueCounter + 1))
-    }
-    const reset = () => {
+    const increment = useCallback(() => {
+        dispatch(incrementAC(valueCounter + 1))
+    }, [valueCounter, maxValueInputDisplay, startValueInputDisplay])
+
+    const reset = useCallback(() => {
         dispatch(resetAC())
-    }
-
-    const setInput = () => {
-        dispatch(setStartValueSettingAC(counterState.startValueInputDisplay))
-    }
+    }, [valueCounter])
 
 
-    const disabledSetButton = counterState.counterText.incorrectValue !== '' || !counterState.counterText.correctValue
-    const disabledIncButton = (counterState.valueCounter === counterState.maxValueInputDisplay) || counterState.counterText.incorrectValue !== '' || counterState.counterText.correctValue !== ''
-    const disabledResetButton = (counterState.valueCounter === 0)
+    const setInput = useCallback(() => {
+        dispatch(setStartValueSettingAC(startValueInputDisplay))
+    }, [startValueInputDisplay])
 
-    const getStartValueFromInput = (startValue: number) => {
+
+    const disabledSetButton = incorrectValue !== '' || !correctValue
+    const disabledIncButton = (valueCounter === maxValueInputDisplay) || incorrectValue !== '' || correctValue !== ''
+    const disabledResetButton = (valueCounter === 0)
+
+    const getStartValueFromInput = useCallback((startValue: number) => {
         dispatch(startValueSettingAC(startValue))
-    }
-    const getMaxValueFromInput = (maxValue: number) => {
+    }, [startValueInputDisplay])
+
+
+    const getMaxValueFromInput = useCallback((maxValue: number) => {
         dispatch(maxValueSettingAC(maxValue))
-    }
+    }, [maxValueInputDisplay])
+
     return (
         <>
             <div className={'mainWrapper'}>
                 <DisplayCounter
-                    counterDisplay={counterState.valueCounter}
-                    MAX_VALUE={counterState.maxValueInputDisplay}
-                    incorrectValue={counterState.counterText.incorrectValue}
-                    correctValue={counterState.counterText.correctValue}
+                    counterDisplay={valueCounter}
+                    MAX_VALUE={maxValueInputDisplay}
+                    incorrectValue={incorrectValue}
+                    correctValue={correctValue}
 
                 />
                 <div className={'buttonWrapper'}>
@@ -88,14 +100,14 @@ function App() {
                 <div className={'inputWrapper'}>
                     <DisplayInputSettingCounter text={'max value'}
                                                 type={'number'}
-                                                valueInputSettingDisplay={counterState.maxValueInputDisplay}
+                                                valueInputSettingDisplay={maxValueInputDisplay}
                                                 errorBothInput={errorBothInput}
                                                 getValue={getMaxValueFromInput}
 
                     />
                     <DisplayInputSettingCounter text={'start value'}
                                                 type={'number'}
-                                                valueInputSettingDisplay={counterState.startValueInputDisplay}
+                                                valueInputSettingDisplay={startValueInputDisplay}
                                                 errorBothInput={errorBothInput}
                                                 getValue={getStartValueFromInput}
 

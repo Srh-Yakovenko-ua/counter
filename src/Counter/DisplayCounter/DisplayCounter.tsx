@@ -8,7 +8,7 @@ type DisplayCounter = {
     correctValue: string
 }
 
-export const DisplayCounter: React.FC<DisplayCounter> = (props) => {
+export const DisplayCounter: React.FC<DisplayCounter> = React.memo((props) => {
     const {
         counterDisplay,
         MAX_VALUE,
@@ -27,5 +27,6 @@ export const DisplayCounter: React.FC<DisplayCounter> = (props) => {
 
         </div>
     );
-};
+
+})
 

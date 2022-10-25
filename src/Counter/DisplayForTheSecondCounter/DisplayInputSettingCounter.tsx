@@ -9,7 +9,7 @@ type DisplaySecondCounterType = {
     errorBothInput: string
     getValue : (value : number)=> void
 }
-export const DisplayInputSettingCounter: React.FC<DisplaySecondCounterType> = (props) => {
+export const DisplayInputSettingCounter: React.FC<DisplaySecondCounterType> = React.memo((props) =>{
     const {
         text,
         type,
@@ -33,6 +33,6 @@ export const DisplayInputSettingCounter: React.FC<DisplaySecondCounterType> = (p
                    value={valueInputSettingDisplay}
                    onChange={onChangeSetHandler}/>
         </div>
-    );
-};
+     );
+});
 
